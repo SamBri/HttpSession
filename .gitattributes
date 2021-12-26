@@ -4,4 +4,7 @@
 *.xml linguist-detectable=false
 
 * linguist-vendored
-*.cpp linguist-vendored=false
+*.java linguist-vendored=false
+
+src/* linguist-documentation=false
+src/* linguist-vendored
