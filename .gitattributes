@@ -32,3 +32,6 @@
 *.so            binary
 *.war           binary
 *.jks           binary
+
+*.java linguist-detectable=true
+*.jsp linguist-detectable=true
