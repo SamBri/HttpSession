@@ -14,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.codefilms.sessionhacks.schema.SessionState;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 /**
  * Servlet implementation class Hello
  */
@@ -29,6 +33,7 @@ public class Hello extends HttpServlet {
 	private  String currentSessionId;
 
 	private String runningSessionId;
+	
 	
 			
        
@@ -57,19 +62,67 @@ public class Hello extends HttpServlet {
 		runningSession = request.getSession(); // obtain a new session 
 		runningSession.setMaxInactiveInterval(10); // set the maximum session interval
 		runningSessionId = runningSession.getId();//user obtains a running session id on GET Request
-		
+		Integer theTimeToLive = runningSession.getMaxInactiveInterval();
 		String tempSessionId = ""; // save the running session generated on REQUEST <-> Route.
 		
 		//display the running session id first 
 		System.out.println("Inside doGet(): init  ==> Running Session Id:" + runningSessionId);
 		System.out.println("Inside doGet(): init ==> Current Session Id:" + currentSessionId);
 		
+		
+		//set headers content-type to return json
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		
+		
+		//String jsonString = "Running Session Id:" + runningSessionId; 
+		
+		SessionState theSessionState = new SessionState();
 		// on same state and null state
 	 if(currentSessionId == null || currentSessionId.equals(runningSessionId)) {
-			out.println("Running Session Id:" + runningSessionId);
+		 
+		 //for null sessionId the session was on start, session was created
+		 if(currentSessionId == null)
+		 {
+			 theSessionState.setStatusCode("100"); // session is created.
+		 	 theSessionState.setMessage("created"); 
+		 	 theSessionState.setTimeToLive(theTimeToLive);
+		 	 theSessionState.setRunningSessionId(runningSessionId);  // mark session state running
+			 theSessionState.setCurrentSessionId(currentSessionId); // mark session state current
+			
+		 } else {
+		 theSessionState.setStatusCode("101"); //session is active
+		 theSessionState.setRunningSessionId(runningSessionId);  // mark session state running
+		 theSessionState.setCurrentSessionId(currentSessionId); // mark session state current
+		 theSessionState.setTimeToLive(theTimeToLive);
+		 theSessionState.setMessage("active"); // session is active
+		 }
+		 ObjectMapper mapper = new ObjectMapper();
+		 String sessionStateJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(theSessionState);
+		 //String sessionStateString = new Gson().toJson(theSessionState);
+		 
+		 System.out.println("Inside doGet(): track  ==> Running Session Id:" + runningSessionId);
+		 System.out.println("Inside doGet(): track  ==> Current Session Id:" + currentSessionId);
+			
+
+		 out.println(sessionStateJson); // print as json 
+		// out.println(theSessionState); // print as json but not marshalled.
+		 
 		}else if(!currentSessionId.equals(runningSessionId))
 		{
-		out.println("Expired Session");
+		theSessionState.setStatusCode("502"); //expired session
+		theSessionState.setRunningSessionId(runningSessionId);
+		theSessionState.setCurrentSessionId(currentSessionId);
+	 	theSessionState.setTimeToLive(0);
+		theSessionState.setMessage("expired"); // session expired.
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String sessionStateJson = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(theSessionState);
+		
+		
+		out.println(sessionStateJson); // print as json
+		
 		// generate new session
 		 currentSessionId = null; // reset currentSessionId
 		 System.out.println("Before leaving doGet(): track ==> Running Session Id:"+runningSessionId);
@@ -90,8 +143,22 @@ public class Hello extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		// save payload or request schema.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//doGet(request, response);
 	}
 	
 	
