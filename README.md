@@ -6,6 +6,8 @@ HTTPSessions, Clients, Web Servers, Endpoints &amp; Logic
 a working understanding of the statelessness of HTTP using  session objects with JSP, Servlet technologies & Web Server(Containerized Application) Refresh sessions logic
 
 # Code
+doGet HTTP Method Code Snippet for exper endpoint /api/Hello<br>
+Full Code: <a href="https://github.com/SamBri/HttpSession/blob/master/build/classes/com/codefilms/sessionhacks/Hello.class"></a>
 ```Java
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter(); // getWriter to for HTML View
