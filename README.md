@@ -7,7 +7,7 @@ a working understanding of the statelessness of HTTP using  session objects with
 
 # Code
 doGet HTTP Method Code Snippet for exper endpoint /api/Hello<br>
-Full Code: <a href="https://github.com/SamBri/HttpSession/blob/master/build/classes/com/codefilms/sessionhacks/Hello.class"></a>
+<a href="https://github.com/SamBri/HttpSession/blob/master/build/classes/com/codefilms/sessionhacks/Hello.class">Full Code</a><br>
 ```Java
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter(); // getWriter to for HTML View
