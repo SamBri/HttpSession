@@ -92,6 +92,19 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 		} 
 ```
 
+# Session States & Responses
+created -> 101<br>
+<img src="https://github.com/SamBri/HttpSession/blob/master/session_state_created_100.png"></img><br>
+
+active -> 102<br>
+<img src="https://github.com/SamBri/HttpSession/blob/master/session_state_active_102.png"></img><br>
+
+expired -> 502<br>
+<img src="https://github.com/SamBri/HttpSession/blob/master/session_state_expired_502.png"></img><br>
+
+
+
+
 
 
 
